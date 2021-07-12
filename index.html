@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>FCC: Technical Documentation Page</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<nav id="navbar">
+  <header>Bash Scripting Documentation</header>
+  <ul>
+    <li><a class="nav-link activenav" href="#Introduction">Introduction</a></li>
+    <li>
+      <a class="nav-link" href="#What_you_should_already_know"
+        >What you should already know</a
+      >
+    </li>
+    <li>
+      <a class="nav-link" href="#Linux_Command_Line_Basics">Linux Command Line Basics</a>
+    </li>
+    <li><a class="nav-link" href="#Hello_world">Hello world</a></li>
+    <li><a class="nav-link" href="#Variables">Variables</a></li>
+    <li>
+      <a class="nav-link" href="#Declaring_variables">Declaring variables</a>
+    </li>
+    <li>
+      <a class="nav-link" href="#tests">Tests</a>
+    </li>
+    <li>
+      <a class="nav-link" href="#if...else_statement">if...else statement</a>
+    </li>
+    <li><a class="nav-link" href="#while_statement">while statement</a></li>
+    <li>
+      <a class="nav-link" href="#Practical_applications"
+        >Practical applications</a
+      >
+    </li>
+    <li><a class="nav-link" href="#Reference">Reference</a></li>
+  </ul>
+</nav>
+<main id="main-doc">
+  <section class="main-section" id="Introduction">
+    <header>Introduction</header>
+    <article>
+      <p><strong>Bash</strong>, which stands for <strong>B</strong>ourne <strong>A</strong>gain <strong>S</strong>hell, processes shell commands in plain text format. Bash Scripting is a way to write a program that the Bash shell will execute.</p>
+      <p>
+        Bash Scripting is a vital component of the Linux Operating System. In Linux, we often interact with the computer using some sort of a command line terminal. We give the computer commands that creates files, directories, change into different directory locations, add users, change file permissions, etc... This is well and good but lots of these operations can be done without a human to type them manually. This is where "scripting", particularly Bash Scripting come in handy. Why Bash? Linux shell is often defaulted to use Bash, as oppose to other shell like sh, csh, and others. This documentation suggests a modular approach to learn how to start writing Bash scripts. 
+      </p>
+
+      <p>
+        Bash scripting offers a way to automate tasks that make things easy for programmers, developers and administators. If you are curious on how many .sh (the Bash script file extension) your linux machine has, and is tempted to run the command:
+        <code>sudo find / -iname '*.sh' | wc -l <span class="codecomments">#<strong>Do not run this unless you have a good computer and plenty of time!</strong> </span>
+        </code>    There are lots of .sh files in Linux and it signifies how essential for anyone working in Linux to know how to read and write <strong>Bash Scripts</strong>     
+      </p>
+    </article>
+  </section>
+  <section class="main-section" id="What_you_should_already_know">
+    <header>What you should already know</header>
+    <article>
+      <p> In order to write effective Bash scripts, you have to be able to know how your script will behave when you run it manually. A bash script file contains commands that you should be able to run on the shell. It helps if you are already familiar with basic Linux commands, some idea of conditional statements, loops, file permissions, and other Linux concepts.</p>
+    </article>
+  </section>
+  <section class="main-section" id="Linux_Command_Line_Basics">
+    <header>Linux Command Line Basics</header>
+    <article>
+      <h3>Some Commands that you should be familiar with</h3>
+      <ul>
+        <li>To change directories:
+          <code>cd /bin
+            cd someDirectoryinBin 
+            <span class="codecomments">#This command takes you to /bin/someDirectoryinBin</span>
+          </code> 
+        </li>
+        <li>To list contents of directories:
+          <code> ls .  <span class="codecomments">#This lists the contents of the current directory</span>
+          ls .. <span class="codecomments">#This lists the contents of the parent directory</span>
+          ls /bin <span class="codecomments">#This lists the contents of the directory /bin</span></code></li>
+        <li>To show environmental variables:
+          <code> env <span class="codecomments">#This lists Linux environmental variables</span>
+          env | more <span class="codecomments">#"|" takes the result of the 'env' command to the 'more' pager to have more control of viewing the results using pages. "|" is also called a pipe
+          </span> ls /bin <span class="codecomments">#This lists the contents of the directory /bin</span></code></li>
+        <li>To create directories and files
+          <code> touch index.html  <span class="codecomments">#This creates an index.html file if it does not exist or updates the modification timestamp of the already existing index.html </span> 
+            mkdir samplefolder <span class="codecomments">#This creates a folder called 'samplefolder' in the current working directory</span></code> </li>
+        <li> To add manage users:
+          <code> sudo adduser ethanhawke  <span class="codecomments">#This creates a user with a username of 'ethanhawke'</span> 
+            sudo usermod -a -G ethanhawk actors<span class="codecomments">#This adds the newly created user to the 'actors' group</span></code> </li>    <li>There are lots of other basic Linux commands that will be shown in the example scipts that will be discussed in subsequent sections.</li> </ul>
+    </article>
+  </section>
+  <section class="main-section" id="Hello_world">
+    <header>Hello world</header>
+    <article>
+      To get started with writing Bash Script, open your favorite text editor to write your  first "Hello world" Bash Script:
+      <code>#!/bin/bash
+        echo "Hello World"
+      </code>
+      In order to run this command, you must make it 'executable' using the command:
+      <code> sudo chmod a+x helloworld.sh </code>
+      To run the code, you type the command:
+      <code> ./helloworld.sh </code> 
+    </article>
+    <h3>Hello World ran in Linux:</h3><figure><img src="./helloworld.jpg" alt="I ran a Hello World Bash script in PopOS Linux"><figcaption>I ran a Hello World Bash script in PopOS Linux</figcaption></figure>
+    <p></p>
+      
+    </article>
+  </section>
+  <section class="main-section" id="Variables">
+    <header>Variables</header>
+    <p>
+      You use variables as symbolic names for values in your application. The
+      names of variables conform to certain rules:
+      <ul>
+        <li>Variable names must start with an alphanumeric character or an underscore (_); subsequent characters can also be digits (0-9). Because
+      Bash Script is case sensitive, letters include the characters "A" through "Z" (uppercase) and the characters "a" through "z" (lowercase).</li>
+        <li>Do not put spaces on either side of the equal sign when assigning value to variable. For example, the following is valid variable declaration</li>
+        <li>Variables names are case-sensitive, just like filenames. </li>
+      </ul>
+    </p>
+    <h3>Example Valid and Invalid Variable Names:</h3>
+
+    <strong>Valid:</strong>
+    <code>FIRST3LETTERS="ABC"
+      FIRST_THREE_LETTERS="ABC"
+      firstThreeLetters="ABC"
+    </code>
+    <strong>Invalid:</strong>
+    <code>3LETTERS="ABC"
+      first-three-letters="ABC"
+      first@Three@letters="ABC"
+    </code>
+    <p class="credits">The above notes came from the course "Learn Linux Administration and Supercharge Your Career" from <a href="https://www.linuxtrainingacademy.com" target="_blank">www.linuxtrainingacademy.com</a></p>
+  </section>
+  <section class="main-section" id="Declaring_variables">
+    <header>Declaring variables</header>
+    <article>
+      You can declare a variable just like in this example:
+      <code>#!/bin/bash          
+        STR="Hello World!"
+        echo $STR
+       favorite_pastime="bath"
+       echo "I am ${favorite_pastime}ing at the moment!"
+       <span class="codecomments">#The use of '{' and '}' with the variable name is sometimes needed if you need to add additional characters like 'ing' to the value of the variable</span></code>
+      <p>
+        Line 2 creates a variable called STR and assigns the string "Hello World!" to it. Then the VALUE of this variable is retrieved by putting the '$' in at the beginning. Please notice (try it!) that if you don't use the '$' sign, the output of the program will be different, and probably not what you want it to be.
+      </p>
+      Another example is a variable that contains an array:
+      <code>my_array=("value 1" "value 2" "value 3")
+        echo second element: ${my_array[1]}
+        echo all elements: ${my_array[@]}
+        echo number of elements: ${#my_array[@]} </code>
+      <p>
+        Again, by preceding the variable name with '$', the value will be accessed.  
+      </p>
+      <h3>Variables can hold the results of running Linux Commands</h3>
+      <p>Here is an example:</p>
+      <code>!#/bin/bash 
+        <span class="codecomments">#keeping the results of 'ls -al .bash*' to the variable FILES_TO_BACKUP</span>
+        FILES_TO_BACKUP=$(ls -al .bash*)
+        <span class="codecomments">#Make a backup of hidden bash files by copying the files we access from using a for loop to the values being held by the variable FILES_TO_BACKUP</span>
+       <pre>for f in $FILES_TO_BACKUP ;
+do 
+         cp $f backup/$f.bak 
+done</pre> </code>
+    </article>
+  </section>
+  <section class="main-section" id="tests">
+    <header>Tests</header>
+    <article>
+      <p>Tests are vital parts of any conditional statements, like the 'if...else' statements:</p>      <h3>File Operators - Tests</h3>
+      <ul>
+        <li>-d FILE <span class="codecomments"> #True if file is a directory</span></li>
+        <li>-e FILE <span class="codecomments"> #True if file exists</span></li>
+        <li>-f FILE <span class="codecomments"> #True if file exists and is a regular file</span></li>
+        <li>-r FILE <span class="codecomments"> #True if file is readable by you</span></li>
+        <li>-s FILE <span class="codecomments"> #True if file exists and is not empty</span></li>
+        <li>-w FILE <span class="codecomments"> #True if file is writeable by you</span></li>
+        <li>-x FILE <span class="codecomments"> #True if file is executable by you</span></li>
+      </ul>
+      <h3>String Operators - Tests</h3>
+      <ul>
+        <li>-z STRING <span class="codecomments"> #True if string is empty</span></li>
+        <li>-n STRING <span class="codecomments"> #True if string is not empty</span></li>
+        <li>STRING1 = STRING2 <span class="codecomments"> #True if strings are equal</span></li>
+        <li>STRING1 != STRING2 <span class="codecomments"> #True if strings are not equal</span></li>
+      </ul>
+      <h3>Arithmentic Operators - Tests</h3>
+      <ul>
+        <li>arg1 -eq arg2 <span class="codecomments"> #True if arg1 is equal to arg2</span></li>
+        <li>arg1 -ne arg2 <span class="codecomments"> #True if arg1 is not equal to arg2</span></li>
+        <li>arg1 -lt arg2 <span class="codecomments"> #True if arg1 is less than arg2</span></li>
+        <li>arg1 -le arg2 <span class="codecomments"> #True if arg1 is less than or equal to arg2</span></li>
+        <li>arg1 -gt arg2 <span class="codecomments"> #True if arg1 is greater than arg2</span></li>
+        <li>arg1 -ge arg2 <span class="codecomments"> #True if arg1 is greater than or equal arg2</span></li>
+      </ul><p class="credits">The above notes came from the course "Learn Linux Administration and Supercharge Your Career" from <a href="https://www.linuxtrainingacademy.com" target="_blank">www.linuxtrainingacademy.com</a></p>
+
+    </article>
+  </section>
+  <section class="main-section" id="if...else_statement">
+    <header>if...else statement</header>
+    <article>
+      <h3>The "if" statement:</h3>
+      <p>In order to make decisions, we extend the use of the 'tests' that we just studied by providing conditional course of actions depending on the results of the tests.</p>
+      <code><pre>if [ condition-is-true ] 
+then
+      command 1
+      command 2
+      command N 
+fi</pre></code>
+
+<h4>Example Bash Script utilizing the "if" statement:</h4>
+<code><pre>
+#!/bin/bash 
+
+if [[ -a ${file} ]]
+then
+  echo "True if file exists:"
+fi
+  
+if [[ -r ${file} ]]
+then
+  echo "True if file exists and is readable:"
+fi
+</pre></code>
+<h4>Example Bash Script utilizing the "if-else" statement:</h4>
+<code><pre>
+#!/bin/bash 
+
+if [[ -a ${file} ]]
+then
+  echo "The file exists"
+else
+  echo "The file does not exist."
+fi
+  
+if [[ -r ${file} ]]
+then
+  echo "The file exists and is readable:"
+else
+  echo "The file is not readable."
+fi
+
+if [[ "$name" == "Ryan" ]] && ! [[ "$time" -lt 2000 ]]; then
+  echo "Sleeping"
+elif [[ "$day" == "New Year's Eve" ]] || [[ "$coffee_intake" -gt 9000 ]]; then
+  echo "Maybe awake"
+else
+  echo "Probably sleeping"
+fi
+
+
+</pre></code>
+    </article>
+  </section>
+  <section class="main-section" id="while_statement">
+    <header>while statement</header>
+    <article>
+      A while statement executes its statements as long as a specified condition
+      evaluates to true. A while statement looks as follows:
+
+      <code>while (condition) statement</code> If the condition becomes false,
+      statement within the loop stops executing and control passes to the
+      statement following the loop.
+
+      <p>
+        The condition test occurs before statement in the loop is executed. If
+        the condition returns true, statement is executed and the condition is
+        tested again. If the condition returns false, execution stops and
+        control is passed to the statement following while.
+      </p>
+
+      <h3>The Syntax of a Bash While Loop is as follows:</h3>
+      <code><pre>while [ condition ]
+do
+   command1
+   command2
+   command3
+done</pre></code>
+<h3>An example 'While Loop' in Bash:</h3>
+<code><pre>#!/bin/bash
+  counter=$1
+  factorial=1
+  while [ $counter -gt 0 ]
+  do
+     factorial=$(( $factorial * $counter ))
+     counter=$(( $counter - 1 ))
+  done
+  echo $factorial</pre></code>
+    </article>
+  </section>
+  <section class="main-section" id="Practical_applications">
+    <header>Practical applications</header>
+    <p>FRST = File Renamer Sorter Tagger</p>
+    <article><code><pre>
+      #!/bin/bash
+
+#-------------------------
+#       filename: fire_renamer_sorter_tagger.sh
+#       description: This script renames files
+#-------------------------
+
+echo "This script by NostradmsX started."
+
+file_extension_to_be_renamed=$1
+some_description=$2
+
+# creates a temporary file list of files that will be sorted, renamed, and tagged
+ls -art *.$file_extension_to_be_renamed > temp_file
+
+IFS=$'\n'       # make newlines the only separator
+
+counter=1;
+
+for i in $(cat < temp_file); do
+    # Single-digit gets preceded by zero
+    if [ "$counter" -le 9 ]; then
+        mv $i 0${counter}_${some_description}.$file_extension_to_be_renamed
+    else
+        mv $i ${counter}_${some_description}.$file_extension_to_be_renamed
+    fi
+
+((counter=counter+1))
+done
+rm temp_file
+echo "Script ended."
+</pre></code>
+    </article>
+  </section>
+  <section class="main-section" id="Reference">
+    <header>Reference</header>
+    <article>
+      <ul>
+        <li>
+          Some lessons from this document is from:
+          <a
+            href="https://www.linuxtrainingacademy.com"
+            target="_blank"
+            >Linux Training Academy</a
+          >
+        </li>
+      </ul>
+    </article>
+  </section>
+</main>
+<!-- partial -->
+  <script src='https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
